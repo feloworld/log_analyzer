@@ -53,7 +53,7 @@ def generar_contrasena(longitud, mayusculas=True, minusculas=True, numeros=True,
     return password
 
 
-def menu():
+def menu_generador():
     """Muestra el menú interactivo para generar contraseñas y maneja la entrada del usuario."""
     
     # Imprime un título decorativo para la herramienta.
@@ -111,19 +111,60 @@ def menu():
         print("Error: Por favor, introduce un número válido para la longitud.")
 
 
-# Este bloque se ejecuta solo cuando el script se corre directamente (no cuando se importa como módulo).
+def analizar_contrasena(contrasena):
+    """Devuelve los requisitos de seguridad que cumple una contraseña."""
+    return {
+        "Tener al menos 8 caracteres": len(contrasena) >= 8,
+        "Incluir una letra mayúscula": any(caracter.isupper() for caracter in contrasena),
+        "Incluir una letra minúscula": any(caracter.islower() for caracter in contrasena),
+        "Incluir un número": any(caracter.isdigit() for caracter in contrasena),
+        "Incluir un símbolo": any(
+            not caracter.isalnum() and not caracter.isspace()
+            for caracter in contrasena
+        ),
+    }
+
+
+def menu():
+    """Muestra las opciones principales de la herramienta."""
+    print("--- HERRAMIENTA DE CONTRASEÑAS ---")
+    print("1. Generar contraseña")
+    print("2. Analizar contraseña")
+    print("3. Salir")
+    opcion = input("Selecciona una opción: ").strip()
+
+    if opcion == "1":
+        menu_generador()
+    elif opcion == "2":
+        contrasena = input("Introduce la contraseña que deseas analizar: ")
+        if not contrasena.strip():
+            print("Error: La contraseña no puede estar vacía.")
+            return True
+
+        requisitos = analizar_contrasena(contrasena)
+        cumplidos = sum(requisitos.values())
+        print("\nResultado del análisis:")
+        for requisito, cumple in requisitos.items():
+            estado = "Cumple" if cumple else "No cumple"
+            print(f"- {requisito}: {estado}")
+
+        if cumplidos == len(requisitos):
+            print("Nivel de seguridad: Fuerte")
+            print("La contraseña cumple todos los requisitos.")
+        else:
+            nivel = "Mejorable" if cumplidos >= 3 else "Débil"
+            print(f"Nivel de seguridad: {nivel}")
+            print("Recomendaciones:")
+            for requisito, cumple in requisitos.items():
+                if not cumple:
+                    print(f"- {requisito}.")
+    elif opcion != "3":
+        print("Opción no válida. Selecciona 1, 2 o 3.")
+
+    return opcion != "3"
+
+
 if __name__ == "__main__":
-    # Inicia un bucle infinito para permitir al usuario generar múltiples contraseñas.
-    while True:
-        # Llama a la función 'menu' para mostrar las opciones y obtener la entrada del usuario.
-        menu()
-        # Imprime una línea en blanco para mejorar la legibilidad entre interacciones.
-        print("\n")
-        # Pregunta al usuario si desea generar otra contraseña.
-        continuar = input("¿Quieres generar otra? (s/n): ").lower()
-        # Comprueba si la respuesta del usuario NO es 's'.
-        if continuar != 's':
-            # Si la respuesta no es 's', imprime un mensaje de despedida.
-            print("¡Adiós!")
-            # Rompe el bucle 'while True', terminando así la ejecución del script.
-            break
+    while menu():
+        print()
+    print("¡Adiós!")
