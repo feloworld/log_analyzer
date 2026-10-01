@@ -1,0 +1,14 @@
+[2023-10-27 08:00:01] INFO: System startup successful.
+[2023-10-27 08:05:12] WARN: High CPU usage detected (92%).
+[2023-10-27 08:10:05] INFO: LOGIN FAILED for user: alice.
+[2023-10-27 08:11:20] ERROR: Database connection lost. Retrying...
+[2023-10-27 08:12:45] INFO: LOGIN SUCCESS for user: bob.
+[2023-10-27 08:15:01] INFO: LOGIN FAILED for user: charlie.
+[2023-10-27 08:16:30] INFO: LOGIN FAILED for user: alice.
+[2023-10-27 08:17:55] DEBUG: Cache refresh initiated.
+[2023-10-27 08:20:01] INFO: LOGIN FAILED for user: charlie.
+[2023-10-27 08:21:10] INFO: LOGIN FAILED for user: alice.
+[2023-10-27 08:25:40] ERROR: File system error in /var/log.
+[2023-10-27 08:30:00] INFO: LOGIN FAILED for user: charlie.
+[2023-10-27 08:35:15] INFO: LOGIN SUCCESS for user: bob.
+[2023-10-27 08:40:00] INFO: Another event occurred, no login info here.
